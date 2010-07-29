@@ -12,7 +12,7 @@
 
 var load = function(object, base){
 	for (var j = 0; j < object.length; j++)
-		document.write('<scr'+'ipt src="' + (base || '') + object[j] + '.js" type="text/javascript"><\/script>');
+		document.write('<scr'+'ipt src="../' + (base || '') + object[j] + '.js" type="text/javascript"><\/script>');
 };
 
 </script>
@@ -23,20 +23,19 @@ var load = function(object, base){
 <script type="text/javascript" src="Helpers/jasmine-html.js"></script>
 <script type="text/javascript" charset="utf-8" src="Helpers/JSSpecToJasmine.js"></script>
 <script type="text/javascript" charset="utf-8" src="Helpers/Loader.js"></script>
-<script type="text/javascript" charset="utf-8" src="Source.js"></script>
-<script type="text/javascript" charset="utf-8" src="Sets.js"></script>
+<script type="text/javascript" charset="utf-8" src="../Configuration.js"></script>
 
 <script type="text/javascript" charset="utf-8">
-var Name = 'MooTools Core',
+var Version,
 	SpecNames = [];
 
 (function(){
 var queryString = document.location.search.substr(1);
 
-var version = loadLibrary(Source, queryString);
+var version = loadLibrary(Configuration.source, queryString);
 
-Name += version;
-SpecNames = loadSpecs(Sets, queryString);
+Version = version;
+SpecNames = loadSpecs(Configuration.sets, queryString);
 
 window.onload = function(){
 	jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
@@ -49,6 +48,6 @@ window.onload = function(){
 <title>Specs for MooTools-Core</title>
 </head>
 <body>
-	<div id="framework_name"><script>document.write(Name + ' [' + SpecNames.join(', ') + ']')</script></div>
+	<div id="framework_name"><script>document.write(Configuration.name + ' ' + Version + ' [' + SpecNames.join(', ') + ']')</script></div>
 </body>
 </html>

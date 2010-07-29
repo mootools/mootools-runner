@@ -12,7 +12,7 @@ $options = json_decode($argv[1], true);
 $path = !empty($options['path']) ? $options['path'] : '../';
 
 $pkg = new Packager(array(
-	dirname(__FILE__) . '/' . $path,
+	dirname(__FILE__) . '/../' . $path,
 	dirname(__FILE__) . '/CommonJS-Loader/'
 ));
 
@@ -31,5 +31,3 @@ $output = $pkg->build($files, array(), array(), array('1.2compat'));
 echo $output;
 
 fclose($stderr);
-
-?>

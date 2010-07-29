@@ -18,12 +18,12 @@ require('./MooTools').apply(GLOBAL);
 
 require('./Helpers/Loader');
 
-var Sets = require('./Sets').Sets;
+var Sets = require('../Configuration').Configuration.sets;
 
 var specs = [];
 load = function(object, base){
 	for (var j = 0; j < object.length; j++)
-		specs.push(__dirname + '/' + (base || '') + object[j]);
+		specs.push(__dirname + '/../' + (base || '') + object[j]);
 };
 
 loadSpecs(Sets, options);

@@ -138,3 +138,37 @@ pre.examples-code code {
 	scrollbar-shadow-color:     #eee;
 	scrollbar-darkshadow-color: #FFF;
 }
+
+
+/* INDEX PAGE */
+.container {
+	padding:3em;
+	width: auto;
+}
+
+#select {
+	text-align:right;
+}
+#select fieldset {
+	text-align:left;
+}
+#select label {
+	text-align:right;
+}
+#select div input {
+	line-height: 2em;
+}
+
+
+ul#prebuilt {
+	padding-left:0;
+	list-style:none;
+}
+ul#prebuilt li a {
+	font-size: 1.5em;
+	text-decoration: none;
+	padding: 0.5em;
+}
+ul#prebuilt li a:hover {
+	background-color: #eee;
+}

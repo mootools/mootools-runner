@@ -10,18 +10,19 @@ var data = 'server: http://localhost:9876\n\n';
 data += 'load:\n';
 load = function(object, base){
 	for (var j = 0; j < object.length; j++)
-		data += '  - "' + (base || '') + object[j] + '.js"\n';
+		data += '  - "../' + (base || '') + object[j] + '.js"\n';
 };
 
 require('./Helpers/Loader');
 
-var Source = require('./Source').Source,
-	Sets = require('./Sets').Sets;
+var Configuration = require('../Configuration').Configuration,
+	Source = Configuration.source,
+	Sets = Configuration.sets;
 
 load([
-	'Jasmine/jasmine',
-	'JSTD-Adapter/src/JasmineAdapter',
-	'Helpers/JSSpecToJasmine'
+	'Runner/Jasmine/jasmine',
+	'Runner/JSTD-Adapter/src/JasmineAdapter',
+	'Runner/Helpers/JSSpecToJasmine'
 ]);
 
 loadLibrary(Source, options);
