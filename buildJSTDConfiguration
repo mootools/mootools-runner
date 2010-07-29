@@ -22,6 +22,7 @@ var Configuration = require('../Configuration').Configuration,
 load([
 	'Runner/Jasmine/jasmine',
 	'Runner/JSTD-Adapter/src/JasmineAdapter',
+	'Runner/Helpers/Syn',
 	'Runner/Helpers/JSSpecToJasmine'
 ]);
 
