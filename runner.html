@@ -44,13 +44,13 @@ window.onload = function(){
 	jasmine.getEnv().execute();
 	
 	// Change title
-	document.getElementById('title').innerText = 'Specs for ' + Configuration.name;
+	document.title = 'Specs for ' + Configuration.name;
 };
 
 })();
 </script>
 
-<title id="title">Specs for MooTools-Core</title>
+<title>Specs for MooTools-Core</title>
 </head>
 <body>
 	<div id="framework_name"><script>document.write(Configuration.name + ' [' + SetNames.join(', ') + ']')</script></div>
