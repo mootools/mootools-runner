@@ -27,28 +27,32 @@ var load = function(object, base){
 <script type="text/javascript" charset="utf-8" src="../Configuration.js"></script>
 
 <script type="text/javascript" charset="utf-8">
-var Version,
-	SpecNames = [];
+
+var SetNames = [];
 
 (function(){
-var queryString = document.location.search.substr(1);
 
-var version = loadLibrary(Configuration.source, queryString);
+// Load all the specs
+var loader = SpecLoader(Configuration, document.location.search.substr(1));
+loader.run();
 
-Version = version;
-SpecNames = loadSpecs(Configuration.sets, queryString);
+SetNames = loader.getSetNames();
 
 window.onload = function(){
+	// Run the specs
 	jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
 	jasmine.getEnv().execute();
+	
+	// Change title
+	document.getElementById('title').innerText = 'Specs for ' + Configuration.name;
 };
 
 })();
 </script>
 
-<title>Specs for MooTools-Core</title>
+<title id="title">Specs for MooTools-Core</title>
 </head>
 <body>
-	<div id="framework_name"><script>document.write(Configuration.name + ' ' + Version + ' [' + SpecNames.join(', ') + ']')</script></div>
+	<div id="framework_name"><script>document.write(Configuration.name + ' [' + SetNames.join(', ') + ']')</script></div>
 </body>
 </html>

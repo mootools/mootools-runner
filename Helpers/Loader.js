@@ -1,4 +1,5 @@
-(function(){
+
+(function(context){
 
 var toString = Object.prototype.toString;
 var isArray = Array.isArray || function(array){
@@ -43,46 +44,75 @@ var parseQueryString = function(string){
 	return res;
 };
 
-var getSpecs = function(Sets, queryString){
-	queryString = parseQueryString(queryString);
-
-	var requestedSpecs = [],
-		specs = queryString.specs;
-
-	forEach(specs && isArray(specs) ? specs : [specs], function(spec){
-		if (Sets[spec] && indexOf(requestedSpecs, spec) == -1) requestedSpecs.push(spec);
-	});
-
-	return requestedSpecs;
-};
-
-loadLibrary = function(Source, queryString){
-	var query = parseQueryString(queryString),
-		version = query.version,
-		path = (query.path || '../') + 'Source/',
-		types = query.types || [],
-		source = Source[version];
+context.SpecLoader = function(config, queryString){
 	
-	if (!source) return;
+	// initialization
+	options = parseQueryString(queryString);
+	
+	var preset;
+	if (options.preset) preset = config.presets[options.preset];
 
-	if (!types.length) for (var type in source) types.push(type);
+	var setNames = [],
+		sourceNames = [];
 
-	for (var i = 0; i < types.length; i++)
-		if (source[types[i]])
-			load(source[types[i]], path);
+	
+	// private methods	
+	var getSets = function(){
+		var requestedSets = [],
+			sets = (preset ? preset : options).sets;
+	
+		forEach(sets && isArray(sets) ? sets : [sets], function(set){
+			if (config.sets[set] && indexOf(requestedSets, set) == -1) requestedSets.push(set);
+		});
+	
+		return requestedSets;			
+	},
+		
+	getSource = function(){
+		var requestedSource = [],
+			source = (preset ? preset : options).source;
+		
+		forEach(source && isArray(source) ? source : [source], function(src){
+			if (config.source[src] && indexOf(requestedSource, src) == -1) requestedSource.push(src);
+		});
+	
+		return requestedSource;			
+	},
+	
+	loadSets = function(){
+		forEach(setNames, function(set){
+			load(config.sets[set].files, config.sets[set].path);
+		});
+	},
+		
+	loadSource = function(){
+		forEach(sourceNames, function(set){
+			load(config.source[set].files, config.source[set].path);
+		});
+			
+	}		
 
-	return version;
+	// public methods
+	
+	return {
 
+		run: function(){
+			
+			// Get the sets and source
+			setNames = getSets();		
+			sourceNames = getSource();
+			
+			// Load the sets and source
+			loadSource();
+			loadSets();
+		},
+		
+		getSetNames: function(){
+			return setNames;
+		}
+	};
+	
 };
 
-loadSpecs = function(Sets, queryString){
-	var requestedSpecs = getSpecs(Sets, queryString);
-	for (var i = 0; i < requestedSpecs.length; i++){
-		var specs = Sets[requestedSpecs[i]];
-		load(specs, requestedSpecs[i] + '/');
-	}
 
-	return requestedSpecs;
-};
-
-})();
+})(typeof exports != 'undefined' ? exports : this);
