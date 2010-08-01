@@ -14,9 +14,8 @@
 <ul id="prebuilt">
 	<script>
 	(function(){
-		for (var i = 0; i < Configuration.presets.length; i++){
-			var preset = Configuration.presets[i];
-			document.write('<li><a href="runner.html?version=' + preset.version + '&specs=' + preset.specs.join('&specs=') + '&path=' + (preset.path || '') + '">&rarr; ' + Configuration.name + ' ' + preset.version + ': ' + preset.specs.join(' + ') + ' Specs</a></li>');
+		for (name in Configuration.presets){
+			document.write('<li><a href="runner.html?preset=' + name + '">&rarr; ' + name + ': [' + Configuration.presets[name].sets.join(', ') + '] Specs</a></li>');
 		}
 	})();
 	</script>
