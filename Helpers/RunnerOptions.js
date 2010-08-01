@@ -2,12 +2,9 @@ var puts = require('sys').puts;
 
 exports.parseOptions = function(arg){
 
-if (!arg){
-	puts('Please provide options for the Spec Runner');
-	return null;
-}
+if (!arg) arg = '{}';
 
-var options;
+var options = {};
 try {
 	options = JSON.parse(arg);
 } catch(e){

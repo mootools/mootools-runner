@@ -15,6 +15,8 @@ var loader = require('./Helpers/Loader');
 // Initialize
 var SpecLoader = loader.SpecLoader(config, options);
 
+SpecLoader.setEnvName('nodejs');
+
 // set method to require all the sourcefiles and append the objects to this object
 var self = this;
 var append = function(original){

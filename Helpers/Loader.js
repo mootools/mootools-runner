@@ -30,13 +30,19 @@ context.SpecLoader = function(config, options){
 	var setNames = [],
 		sourceNames = [],
 		sourceLoader = function(){},
-		specLoader = function(){};
+		specLoader = function(){},
+		envName = 'browser';
 
 	
-	// private methods	
-	var getSets = function(){
+	// private methods
+	
+	var getDefault = function(){
+		return config.presets[config.defaultPresets[envName]];
+	},
+	
+	getSets = function(){
 		var requestedSets = [],
-			sets = (preset ? preset : options).sets;
+			sets = (preset ? preset : options).sets || getDefault().sets;
 	
 		forEach(sets && isArray(sets) ? sets : [sets], function(set){
 			if (config.sets[set] && indexOf(requestedSets, set) == -1) requestedSets.push(set);
@@ -47,7 +53,7 @@ context.SpecLoader = function(config, options){
 		
 	getSource = function(){
 		var requestedSource = [],
-			source = (preset ? preset : options).source;
+			source = (preset ? preset : options).source || getDefault().source;
 		
 		forEach(source && isArray(source) ? source : [source], function(src){
 			if (config.source[src] && indexOf(requestedSource, src) == -1) requestedSource.push(src);
@@ -80,6 +86,10 @@ context.SpecLoader = function(config, options){
 		setSpecLoader: function(load){
 			specLoader = load;
 			return this;
+		},
+		
+		setEnvName: function(name){
+			envName = name;
 		},
 
 		run: function(){
