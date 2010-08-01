@@ -90,6 +90,7 @@ context.SpecLoader = function(config, options){
 		
 		setEnvName: function(name){
 			envName = name;
+			return this;
 		},
 
 		run: function(){
