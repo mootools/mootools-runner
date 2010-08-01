@@ -4,12 +4,6 @@
 [submodule "Jasmine-Node"]
 	path = Jasmine-Node
 	url = git://github.com/cpojer/jasmine-node.git
-[submodule "CommonJS-Loader"]
-	path = CommonJS-Loader
-	url = git://github.com/cpojer/mootools-loader.git
-[submodule "Packager"]
-	path = Packager
-	url = http://github.com/kamicane/packager.git
 [submodule "JSTestDriver"]
 	path = JSTestDriver
 	url = git://github.com/cpojer/jstestdriver-build.git
