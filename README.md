@@ -29,7 +29,7 @@ Set up the Specs:
 	* Start via ./server {options}
 	* Point one or more browsers to http://localhost:9876
 	* Run all tests via ./test
-* Run in NodeJS via ./runner {options}
+* Run in NodeJS via ./runner.js {options}
 
 ### Available Options
 
@@ -39,9 +39,9 @@ Example for JSTD
 	./server '{"version": 1.3, "path": "../core/", "specs": [1.2, "1.3base", "1.3client"]}'
 
 Example for NodeJS
-	./runner '{"specs": ["1.3base"], "path": "../core/"}'
+	./runner.js '{"sets": ["1.3base"], "source": "../core/"}'
 
 Options
-	"path" - Only needs to be specified if the core-specs repository is being used outside of the MooTools Core repository
-	"specs" - The specs to run, see Sets.js
-	"version" - The version of MooTools to be used for running the specs
+	"sets" - The specs to run, see Configuration.js
+	"source" - The source files package, see Configuration.js
+	"preset" - You can simply use a preset with predefined sets and source, see Configuration.js
