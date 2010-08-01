@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 // Runs Specs in NodeJS
-// Usage: ./runner '{"specs": ["1.3base"], "path": "../core/"}'
 
 var puts = require('sys').puts;
 
@@ -8,12 +7,9 @@ var puts = require('sys').puts;
 var options = require('./Helpers/RunnerOptions').parseOptions(process.argv[2]);
 if (!options) return;
 
-// load config and the loader
-var config = require('../Configuration').Configuration;
-var loader = require('./Helpers/Loader');
-
 // Initialize
-var SpecLoader = loader.SpecLoader(config, options);
+var loader = require('./Helpers/Loader');
+var SpecLoader = loader.SpecLoader(require('../Configuration').Configuration, options);
 
 SpecLoader.setEnvName('nodejs');
 

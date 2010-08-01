@@ -1,4 +1,3 @@
-
 (function(context){
 
 var toString = Object.prototype.toString;
@@ -22,7 +21,7 @@ var forEach = function(array, fn, bind){
 
 
 context.SpecLoader = function(config, options){
-	
+
 	// initialization
 	var preset;
 	if (options.preset) preset = config.presets[options.preset];
@@ -42,7 +41,7 @@ context.SpecLoader = function(config, options){
 	
 	getSets = function(){
 		var requestedSets = [],
-			sets = (preset ? preset : options).sets || getDefault().sets;
+			sets = (preset || options).sets || getDefault().sets;
 	
 		forEach(sets && isArray(sets) ? sets : [sets], function(set){
 			if (config.sets[set] && indexOf(requestedSets, set) == -1) requestedSets.push(set);
@@ -53,7 +52,7 @@ context.SpecLoader = function(config, options){
 		
 	getSource = function(){
 		var requestedSource = [],
-			source = (preset ? preset : options).source || getDefault().source;
+			source = (preset || options).source || getDefault().source;
 		
 		forEach(source && isArray(source) ? source : [source], function(src){
 			if (config.source[src] && indexOf(requestedSource, src) == -1) requestedSource.push(src);
@@ -71,8 +70,8 @@ context.SpecLoader = function(config, options){
 	loadSource = function(){
 		forEach(sourceNames, function(set){
 			sourceLoader(config.source[set].files, config.source[set].path);
-		});	
-	}		
+		});
+	};
 
 	// public methods
 	

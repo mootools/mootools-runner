@@ -62,8 +62,7 @@ var load = function(object, base){
 		document.write('<scr'+'ipt src="../' + (base || '') + object[j] + '.js" type="text/javascript"><\/script>');
 };
 
-loader.setSourceLoader(load)
-	.setSpecLoader(load);
+loader.setSourceLoader(load).setSpecLoader(load);
 
 loader.run();
 
@@ -82,7 +81,7 @@ window.onload = function(){
 })();
 </script>
 
-<title>Specs for MooTools-Core</title>
+<title></title>
 </head>
 <body>
 	<div id="framework_name"><script>document.write(Configuration.name + ' [' + SetNames.join(', ') + ']')</script></div>

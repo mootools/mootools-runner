@@ -1,33 +1,28 @@
-#!/usr/bin/env node
-// Builds a jsTestDriver.conf for the specified Source/Sets
-
-(function(){
-
 var options = require('./Helpers/RunnerOptions').parseOptions(process.argv[2]);
 if (!options) return;
 
+// Initialize
+var loader = require('./Helpers/Loader');
+var SpecLoader = loader.SpecLoader(require('../Configuration').Configuration, options);
+
+SpecLoader.setEnvName('jstd');
+
 var data = 'server: http://localhost:9876\n\n';
 data += 'load:\n';
-load = function(object, base){
+
+var loader = function(object, base){
 	for (var j = 0; j < object.length; j++)
 		data += '  - "../' + (base || '') + object[j] + '.js"\n';
 };
 
-require('./Helpers/Loader');
-
-var Configuration = require('../Configuration').Configuration,
-	Source = Configuration.source,
-	Sets = Configuration.sets;
-
-load([
+loader([
 	'Runner/Jasmine/jasmine',
 	'Runner/JSTD-Adapter/src/JasmineAdapter',
 	'Runner/Helpers/Syn',
 	'Runner/Helpers/JSSpecToJasmine'
 ]);
 
-loadLibrary(Source, options);
-loadSpecs(Sets, options);
+SpecLoader.setSourceLoader(loader).setSpecLoader(loader).run();
 
 // TODO check why JSTD Coverage fails
 if (options.coverage){
@@ -38,5 +33,3 @@ if (options.coverage){
 
 var fs = require('fs');
 fs.writeFile('./jsTestDriver.conf', data);
-
-})();

@@ -22,7 +22,7 @@ Configuration.presets = {
 Configuration.defaultPresets = {
 	browser: 'more-all',
 	nodejs: 'more-base',
-	jsdt: 'more-all'
+	jstd: 'more-all'
 };
 
 
