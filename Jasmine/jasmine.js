@@ -844,7 +844,7 @@ jasmine.Env.prototype.compareObjects_ = function(a, b, mismatchKeys, mismatchVal
   for (property in b) {
     if (property == '__Jasmine_been_here_before__') continue;
     if (!this.equals_(a[property], b[property], mismatchKeys, mismatchValues)) {
-      mismatchValues.push("'" + property + "' was '" + (b[property] ? jasmine.util.htmlEscape(b[property].toString()) : b[property]) + "' in expected, but was '" + (a[property] ? jasmine.util.htmlEscape(a[property].toString()) : a[property]) + "' in actual.");
+	  mismatchValues.push("'" + property + "' was '" + (b[property] ? jasmine.util.htmlEscape(b[property].toString ? b[property].toString() : '' + b[property]) : b[property]) + "' in expected, but was '" + (a[property] ? jasmine.util.htmlEscape(a[property].toString ? a[property].toString() : '' + a[property]) : a[property]) + "' in actual.");
     }
   }
 
