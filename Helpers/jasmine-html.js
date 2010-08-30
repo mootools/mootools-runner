@@ -165,7 +165,10 @@ jasmine.TrivialReporter.prototype.reportSpecResults = function(spec) {
 
 jasmine.TrivialReporter.prototype.log = function() {
   var console = jasmine.getGlobal().console;
-  if (console && console.log) console.log.apply(console, arguments);
+  if (console && console.log){
+	  if (console.log.apply) console.log.apply(console, arguments);
+	  else console.log(Array.prototype.join.call(arguments, ', '));
+  }
 };
 
 jasmine.TrivialReporter.prototype.getLocation = function() {
