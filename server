@@ -1,2 +1,1 @@
-node buildJSTDConfiguration.js "$1"
-java -jar ./JSTestDriver/JSTestDriver.jar --port 9876 --runnerMode DEBUG
+java -jar ./JSTestDriver/JSTestDriver.jar --config jsTestDriverServer.conf --port 9876 --runnerMode DEBUG
