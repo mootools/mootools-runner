@@ -23,7 +23,7 @@ load([
 ]);
 
 SpecLoader.setSourceLoader(load).setSpecLoader(load).run();
-options.coverage = true;
+
 // TODO check why JSTD Coverage fails
 if (options.coverage){
 	data += 'plugin:\n';
