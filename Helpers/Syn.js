@@ -2,7 +2,7 @@
 
 (function($){
 
-	
+var fireEvent = document.documentElement.fireEvent;
 	
 var extend = function(d, s) { for (var p in s) d[p] = s[p]; return d;},
 	// only uses browser detection for key events
@@ -431,7 +431,7 @@ extend(Syn,{
 				function(event, element, type){
 					try {window.event = event;}catch(e) {}
 					//source element makes sure element is still in the document
-					return element.sourceIndex <= 0 || element.fireEvent('on'+type, event)
+					return element.sourceIndex <= 0 || fireEvent.call(element, 'on'+type, event)
 				}
 			),
 	/**
