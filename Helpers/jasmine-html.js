@@ -1,3 +1,56 @@
+// Object.toQueryString from MooTools Core
+jasmine.toQueryString = function(object, base){
+	var queryString = [];
+
+	for (var i in object) (function(value, key){
+		if (base) key = base + '[' + key + ']';
+		var result;
+		if (jasmine.isArray_(value)){
+			var qs = {};
+			for (var j = 0; j < value.length; j++)
+				qs[j] = value[j];
+			result = jasmine.toQueryString(qs, key);
+		} else if (typeof value == 'object'){
+			result = jasmine.toQueryString(value, key);
+		} else {
+			result = key + '=' + encodeURIComponent(value);
+		}
+		
+		if (value != undefined) queryString.push(result);
+	})(object[i], i);
+
+	return queryString.join('&');
+};
+
+// String.parseQueryString from MooTools More
+jasmine.parseQueryString = function(string){
+	var vars = string.split(/[&;]/),
+		object = {};
+
+	if (!vars.length) return object;
+
+	for(var i = 0; i < vars.length; i++) (function(val){
+		var index = val.indexOf('='),
+			keys = index < 0 ? [''] : val.substr(0, index).match(/[^\]\[]+/g),
+			value = decodeURIComponent(val.substr(index + 1));
+
+		for(var j = 0; j < keys.length; j++) (function(key, i){
+			var current = object[key];
+			if(i < keys.length - 1)
+				object = object[key] = current || {};
+			else if(current != null && typeof current.length == 'number')
+				current.push(value);
+			else
+				object[key] = current != null ? [current, value] : value;
+		})(keys[j], j);
+
+	})(vars[i]);
+
+	return object;
+};
+
+
+
 jasmine.TrivialReporter = function(doc) {
   this.document = doc || document;
   this.suiteDivs = {};
@@ -13,7 +66,7 @@ jasmine.TrivialReporter.prototype.createDom = function(type, attrs, childrenVarA
     if (typeof child === 'string') {
       el.appendChild(document.createTextNode(child));
     } else {
-      if (child) { el.appendChild(child); }
+      if (child) {el.appendChild(child);}
     }
   }
 
@@ -31,24 +84,27 @@ jasmine.TrivialReporter.prototype.createDom = function(type, attrs, childrenVarA
 jasmine.TrivialReporter.prototype.reportRunnerStarting = function(runner) {
   var showPassed, showSkipped;
 
-  this.outerDiv = this.createDom('div', { className: 'jasmine_reporter' },
-      this.createDom('div', { className: 'banner' },
-        this.createDom('div', { className: 'logo' },
+  var query = jasmine.parseQueryString(document.location.search.substr(1));
+  delete query.spec;
+  
+   this.outerDiv = this.createDom('div', {className: 'jasmine_reporter'},
+      this.createDom('div', {className: 'banner'},
+        this.createDom('div', {className: 'logo'},
             "Jasmine",
-            this.createDom('span', { className: 'version' }, runner.env.versionString())),
-        this.createDom('div', { className: 'options' },
+            this.createDom('span', {className: 'version'}, runner.env.versionString())),
+        this.createDom('div', {className: 'options'},
             "Show ",
-            showPassed = this.createDom('input', { id: "__jasmine_TrivialReporter_showPassed__", type: 'checkbox' }),
-            this.createDom('label', { "for": "__jasmine_TrivialReporter_showPassed__" }, " passed "),
-            showSkipped = this.createDom('input', { id: "__jasmine_TrivialReporter_showSkipped__", type: 'checkbox' }),
-            this.createDom('label', { "for": "__jasmine_TrivialReporter_showSkipped__" }, " skipped")
+            showPassed = this.createDom('input', {id: "__jasmine_TrivialReporter_showPassed__", type: 'checkbox'}),
+            this.createDom('label', {"for": "__jasmine_TrivialReporter_showPassed__"}, " passed "),
+            showSkipped = this.createDom('input', {id: "__jasmine_TrivialReporter_showSkipped__", type: 'checkbox'}),
+            this.createDom('label', {"for": "__jasmine_TrivialReporter_showSkipped__"}, " skipped")
             )
           ),
 
-      this.runnerDiv = this.createDom('div', { className: 'runner running' },
-          this.createDom('a', { className: 'run_spec', href: '?' }, "run all"),
+	  this.runnerDiv = this.createDom('div', {className: 'runner running'},
+          this.createDom('a', {className: 'run_spec', href: '?' + jasmine.toQueryString(query)}, "run all"),
           this.runnerMessageSpan = this.createDom('span', {}, "Running..."),
-          this.finishedAtSpan = this.createDom('span', { className: 'finished-at' }, ""))
+          this.finishedAtSpan = this.createDom('span', {className: 'finished-at'}, ""))
       );
 
   this.document.body.appendChild(this.outerDiv);
@@ -56,9 +112,11 @@ jasmine.TrivialReporter.prototype.reportRunnerStarting = function(runner) {
   var suites = runner.suites();
   for (var i = 0; i < suites.length; i++) {
     var suite = suites[i];
-    var suiteDiv = this.createDom('div', { className: 'suite' },
-        this.createDom('a', { className: 'run_spec', href: '?spec=' + encodeURIComponent(suite.getFullName()) }, "run"),
-        this.createDom('a', { className: 'description', href: '?spec=' + encodeURIComponent(suite.getFullName()) }, suite.description));
+
+	query.spec = suite.getFullName();
+    var suiteDiv = this.createDom('div', {className: 'suite'},
+        this.createDom('a', {className: 'run_spec', href: '?' + jasmine.toQueryString(query)}, "run"),
+        this.createDom('a', {className: 'description', href: '?' + jasmine.toQueryString(query)}, suite.description));
     this.suiteDivs[suite.id] = suiteDiv;
     var parentDiv = this.outerDiv;
     if (suite.parentSuite) {
@@ -102,7 +160,7 @@ jasmine.TrivialReporter.prototype.reportRunnerResults = function(runner) {
   }
   var message = "" + specCount + " spec" + (specCount == 1 ? "" : "s" ) + ", " + results.failedCount + " failure" + ((results.failedCount == 1) ? "" : "s");
   message += " in " + ((new Date().getTime() - this.startedAt.getTime()) / 1000) + "s";
-  this.runnerMessageSpan.replaceChild(this.createDom('a', { className: 'description', href: '?'}, message), this.runnerMessageSpan.firstChild);
+  this.runnerMessageSpan.replaceChild(this.createDom('a', {className: 'description', href: '#'}, message), this.runnerMessageSpan.firstChild);
 
   this.finishedAtSpan.appendChild(document.createTextNode("Finished at " + new Date().toString()));
 };
@@ -128,17 +186,21 @@ jasmine.TrivialReporter.prototype.reportSpecResults = function(spec) {
   if (results.skipped) {
     status = 'skipped';
   }
-  var specDiv = this.createDom('div', { className: 'spec '  + status },
-      this.createDom('a', { className: 'run_spec', href: '?spec=' + encodeURIComponent(spec.getFullName()) }, "run"),
+
+  var query = jasmine.parseQueryString(document.location.search.substr(1));
+  query.spec = spec.getFullName();
+  
+  var specDiv = this.createDom('div', {className: 'spec '  + status},
+      this.createDom('a', {className: 'run_spec', href: '?' + jasmine.toQueryString(query)}, "run"),
       this.createDom('a', {
         className: 'description',
-        href: '?spec=' + encodeURIComponent(spec.getFullName()),
+        href: '?' + jasmine.toQueryString(query),
         title: spec.getFullName()
       }, spec.description));
 
 
   var resultItems = results.getItems();
-  var messagesDiv = this.createDom('div', { className: 'messages' });
+  var messagesDiv = this.createDom('div', {className: 'messages'});
   for (var i = 0; i < resultItems.length; i++) {
     var result = resultItems[i];
     if (result.type == 'log') {
@@ -175,14 +237,14 @@ jasmine.TrivialReporter.prototype.getLocation = function() {
   return this.document.location;
 };
 
-jasmine.TrivialReporter.prototype.specFilter = function(spec) {
-  var paramMap = {};
-  var params = this.getLocation().search.substring(1).split('&');
-  for (var i = 0; i < params.length; i++) {
-    var p = params[i].split('=');
-    paramMap[decodeURIComponent(p[0])] = decodeURIComponent(p[1]);
-  }
+(function(){
 
-  if (!paramMap["spec"]) return true;
-  return spec.getFullName().indexOf(paramMap["spec"]) == 0;
+var query = jasmine.parseQueryString(document.location.search.substr(1));
+
+jasmine.TrivialReporter.prototype.specFilter = function(spec) {
+  if (!query.spec) return true;
+  console.log(query.spec == spec.getFullName());
+  return spec.getFullName().indexOf(query.spec) == 0;
 };
+
+})();
