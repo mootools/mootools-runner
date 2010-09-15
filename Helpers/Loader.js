@@ -37,9 +37,9 @@ context.SpecLoader = function(config, options){
 	
 	var getDefault = function(){
 		return config.presets[config.defaultPresets[envName]];
-	},
+	};
 	
-	getSets = function(){
+	var getSets = function(){
 		var requestedSets = [],
 			sets = (preset || options).sets || getDefault().sets;
 	
@@ -48,9 +48,9 @@ context.SpecLoader = function(config, options){
 		});
 	
 		return requestedSets;			
-	},
+	};
 		
-	getSource = function(){
+	var getSource = function(){
 		var requestedSource = [],
 			source = (preset || options).source || getDefault().source;
 		
@@ -59,15 +59,15 @@ context.SpecLoader = function(config, options){
 		});
 	
 		return requestedSource;			
-	},
+	};
 	
-	loadSets = function(){
+	var loadSets = function(){
 		forEach(setNames, function(set){
 			specLoader(config.sets[set].files, config.sets[set].path);
 		});
-	},
+	};
 		
-	loadSource = function(){
+	var loadSource = function(){
 		forEach(sourceNames, function(set){
 			sourceLoader(config.source[set].files, config.source[set].path);
 		});
@@ -107,7 +107,12 @@ context.SpecLoader = function(config, options){
 		
 		getSetNames: function(){
 			return setNames;
+		},
+
+		getSourceNames: function(){
+			return sourceNames;
 		}
+		
 	};
 	
 };
