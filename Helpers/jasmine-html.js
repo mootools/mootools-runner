@@ -143,6 +143,9 @@ jasmine.TrivialReporter.prototype.reportRunnerStarting = function(runner) {
       self.outerDiv.className = self.outerDiv.className.replace(/ show-skipped/, '');
     }
   };
+
+  runner.env.specFilter = this.specFilter;
+
 };
 
 jasmine.TrivialReporter.prototype.reportRunnerResults = function(runner) {
@@ -208,13 +211,13 @@ jasmine.TrivialReporter.prototype.reportSpecResults = function(spec) {
     } else if (result.type == 'expect' && result.passed && !result.passed()) {
       messagesDiv.appendChild(this.createDom('div', {className: 'resultMessage fail'}, result.message));
 
-	  var fn = spec.queue && spec.queue.blocks && spec.queue.blocks[1] ? spec.queue.blocks[1].func : null;
-	  if (fn){
-		var pre = this.createDom('pre', {className: 'examples-code'});
-		
-		pre.appendChild(this.createDom('code', null, fn.toString().replace(/</img, '&lt;').replace(/>/img, '&gt;')));
-		messagesDiv.appendChild(pre);
-	  }
+      var fn = spec.queue && spec.queue.blocks && spec.queue.blocks[1] ? spec.queue.blocks[1].func : null;
+      if (fn){
+        var pre = this.createDom('pre', {className: 'examples-code'});
+
+        pre.appendChild(this.createDom('code', null, fn.toString().replace(/</img, '&lt;').replace(/>/img, '&gt;')));
+        messagesDiv.appendChild(pre);
+      }
     }
   }
 
@@ -228,8 +231,8 @@ jasmine.TrivialReporter.prototype.reportSpecResults = function(spec) {
 jasmine.TrivialReporter.prototype.log = function() {
   var console = jasmine.getGlobal().console;
   if (console && console.log){
-	  if (console.log.apply) console.log.apply(console, arguments);
-	  else console.log(Array.prototype.join.call(arguments, ', '));
+    if (console.log.apply) console.log.apply(console, arguments);
+    else console.log(Array.prototype.join.call(arguments, ', '));
   }
 };
 
@@ -243,7 +246,6 @@ var query = jasmine.parseQueryString(document.location.search.substr(1));
 
 jasmine.TrivialReporter.prototype.specFilter = function(spec) {
   if (!query.spec) return true;
-  console.log(query.spec == spec.getFullName());
   return spec.getFullName().indexOf(query.spec) == 0;
 };
 
