@@ -51,10 +51,11 @@ jasmine.parseQueryString = function(string){
 
 
 
-jasmine.TrivialReporter = function(doc) {
+jasmine.TrivialReporter = function(doc, appendTo) {
   this.document = doc || document;
   this.suiteDivs = {};
   this.logRunningSpecs = false;
+  this.appendTo = appendTo || this.document.body;
 };
 
 jasmine.TrivialReporter.prototype.createDom = function(type, attrs, childrenVarArgs) {
@@ -107,7 +108,7 @@ jasmine.TrivialReporter.prototype.reportRunnerStarting = function(runner) {
           this.finishedAtSpan = this.createDom('span', {className: 'finished-at'}, ""))
       );
 
-  this.document.body.appendChild(this.outerDiv);
+  this.appendTo.appendChild(this.outerDiv);
 
   var suites = runner.suites();
   for (var i = 0; i < suites.length; i++) {
