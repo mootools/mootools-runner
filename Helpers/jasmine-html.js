@@ -162,7 +162,7 @@ jasmine.TrivialReporter.prototype.reportRunnerResults = function(runner) {
       specCount++;
     }
   }
-  var message = "" + specCount + " spec" + (specCount == 1 ? "" : "s" ) + ", " + results.failedCount + " failure" + ((results.failedCount == 1) ? "" : "s");
+  var message = "" + specCount + " spec" + (specCount == 1 ? "" : "s" ) + ", " + results.totalCount + " assertion" + (results.totalCount == 1 ? "" : "s" ) + ", " + results.failedCount + " failure" + ((results.failedCount == 1) ? "" : "s");
   message += " in " + ((new Date().getTime() - this.startedAt.getTime()) / 1000) + "s";
   this.runnerMessageSpan.replaceChild(this.createDom('a', {className: 'description', href: '#'}, message), this.runnerMessageSpan.firstChild);
 
