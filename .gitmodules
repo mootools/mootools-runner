@@ -1,9 +1,6 @@
 [submodule "JSTD-Adapter"]
 	path = JSTD-Adapter
 	url = git://github.com/cpojer/jasmine-jstd-adapter.git
-[submodule "Jasmine-Node"]
-	path = Jasmine-Node
-	url = git://github.com/cpojer/jasmine-node.git
 [submodule "JSTestDriver"]
 	path = JSTestDriver
 	url = git://github.com/cpojer/jstestdriver-build.git
