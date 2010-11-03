@@ -4,3 +4,6 @@
 [submodule "JSTestDriver"]
 	path = JSTestDriver
 	url = git://github.com/cpojer/jstestdriver-build.git
+[submodule "Jasmine-Node"]
+	path = Jasmine-Node
+	url = git@github.com:oelmekki/jasmine-node.git
