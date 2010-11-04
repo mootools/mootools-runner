@@ -59,15 +59,9 @@ for(var key in jasmine)
 
 require('./Helpers/JSSpecToJasmine');
 
-if ( ! options.reporter ){
-  options.reporter = 'console';
-}
-
-var reporter    = require('jasmine/' + options.reporter + '_reporter').Reporter;
-reporter.done   = function(runner, log){
+var reporter = require('reporters/' + (options.reporter || 'console')).Reporter;
+reporter.done = function(runner, log){
   process.exit(runner.results().failedCount);
 };
 
-jasmine.runSpecs(specs, reporter );
-
-
+jasmine.runSpecs(specs, reporter);
