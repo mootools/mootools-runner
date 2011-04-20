@@ -15,12 +15,11 @@ Set up the Specs:
 	cd Specs
 	git pull origin master
 	git submodule update --init
-	chmod +x server test runner runner.js buildCommonJS buildJSTDConfiguration
+	chmod +x server test runner runner.js buildJSTDConfiguration.js
 
 ### Requirements
 
 * NodeJS
-* PHP (for Packager)
 
 ### Usage
 

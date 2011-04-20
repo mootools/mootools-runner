@@ -7,22 +7,33 @@ var SpecLoader = loader.SpecLoader(require('../Configuration').Configuration, op
 
 SpecLoader.setEnvName('jstd');
 
-var data = 'server: http://localhost:9876\n\n';
-data += 'load:\n';
+var data = 'server: http://localhost:9876\n\n',
+	sources = '',
+	specs = '';
 
-var load = function(object, base){
+var loadSource = function(object, base){
 	for (var j = 0; j < object.length; j++)
-		data += '  - "../' + (base || '') + object[j] + '.js"\n';
+		sources += '  - "../' + (base || '') + object[j] + '.js"\n';
 };
 
-load([
+var loadSpec = function(object, base){
+	for (var j = 0; j < object.length; j++)
+		specs += '  - "../' + (base || '') + object[j] + '.js"\n';
+};
+
+loadSource([
 	'Runner/Jasmine/jasmine',
 	'Runner/JSTD-Adapter/src/JasmineAdapter',
 	'Runner/Helpers/Syn',
+	'Runner/Helpers/simulateEvent',
 	'Runner/Helpers/JSSpecToJasmine'
 ]);
 
-SpecLoader.setSourceLoader(load).setSpecLoader(load).run();
+SpecLoader.setSourceLoader(loadSource).setSpecLoader(loadSpec).run();
+
+data += 'load:\n' + sources + '\n';
+data += 'test:\n' + specs + '\n';
+
 
 // TODO check why JSTD Coverage fails
 if (options.coverage){
