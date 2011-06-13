@@ -29,7 +29,9 @@ loadSource([
 	'Runner/Helpers/JSSpecToJasmine',
 	'Runner/Helpers/Sinon.JS/lib/sinon',
 	'Runner/Helpers/Sinon.JS/lib/sinon/util/fake_xml_http_request',
-	'Runner/Helpers/Sinon.JS/lib/sinon/util/xhr_ie'
+	'Runner/Helpers/Sinon.JS/lib/sinon/util/xhr_ie',
+	'Runner/Helpers/Sinon.JS/lib/sinon/util/fake_timers',
+	'Runner/Helpers/Sinon.JS/lib/sinon/util/timers_ie',
 ]);
 
 SpecLoader.setSourceLoader(loadSource).setSpecLoader(loadSpec).run();
