@@ -26,7 +26,10 @@ loadSource([
 	'Runner/JSTD-Adapter/src/JasmineAdapter',
 	'Runner/Helpers/Syn',
 	'Runner/Helpers/simulateEvent',
-	'Runner/Helpers/JSSpecToJasmine'
+	'Runner/Helpers/JSSpecToJasmine',
+	'Runner/Helpers/Sinon.JS/lib/sinon',
+	'Runner/Helpers/Sinon.JS/lib/sinon/util/fake_xml_http_request',
+	'Runner/Helpers/Sinon.JS/lib/sinon/util/xhr_ie'
 ]);
 
 SpecLoader.setSourceLoader(loadSource).setSpecLoader(loadSpec).run();
