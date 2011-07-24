@@ -32,41 +32,41 @@ context.SpecLoader = function(config, options){
 		specLoader = function(){},
 		envName = 'browser';
 
-	
+
 	// private methods
-	
+
 	var getDefault = function(){
 		return config.presets[config.defaultPresets[envName]];
 	};
-	
+
 	var getSets = function(){
 		var requestedSets = [],
 			sets = (preset || options).sets || getDefault().sets;
-	
+
 		forEach(sets && isArray(sets) ? sets : [sets], function(set){
 			if (config.sets[set] && indexOf(requestedSets, set) == -1) requestedSets.push(set);
 		});
-	
-		return requestedSets;			
+
+		return requestedSets;
 	};
-		
+
 	var getSource = function(){
 		var requestedSource = [],
 			source = (preset || options).source || getDefault().source;
-		
+
 		forEach(source && isArray(source) ? source : [source], function(src){
 			if (config.source[src] && indexOf(requestedSource, src) == -1) requestedSource.push(src);
 		});
-	
-		return requestedSource;			
+
+		return requestedSource;
 	};
-	
+
 	var loadSets = function(){
 		forEach(setNames, function(set){
 			specLoader(config.sets[set].files, config.sets[set].path);
 		});
 	};
-		
+
 	var loadSource = function(){
 		forEach(sourceNames, function(set){
 			sourceLoader(config.source[set].files, config.source[set].path);
@@ -74,37 +74,37 @@ context.SpecLoader = function(config, options){
 	};
 
 	// public methods
-	
+
 	return {
 
 		setSourceLoader: function(loader){
 			sourceLoader = loader;
 			return this;
 		},
-		
+
 		setSpecLoader: function(load){
 			specLoader = load;
 			return this;
 		},
-		
+
 		setEnvName: function(name){
 			envName = name;
 			return this;
 		},
 
 		run: function(){
-			
+
 			// Get the sets and source
-			setNames = getSets();		
+			setNames = getSets();
 			sourceNames = getSource();
-			
+
 			// Load the sets and source
 			loadSource();
 			loadSets();
-			
+
 			return this;
 		},
-		
+
 		getSetNames: function(){
 			return setNames;
 		},
@@ -112,9 +112,9 @@ context.SpecLoader = function(config, options){
 		getSourceNames: function(){
 			return sourceNames;
 		}
-		
+
 	};
-	
+
 };
 
 
