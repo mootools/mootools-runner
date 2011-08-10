@@ -7,3 +7,6 @@
 [submodule "JSTestDriver"]
 	path = JSTestDriver
 	url = git://github.com/cpojer/jstestdriver-build.git
+[submodule "Helpers/Sinon.JS"]
+	path = Helpers/Sinon.JS
+	url = git://github.com/ibolmo/Sinon.JS.git
