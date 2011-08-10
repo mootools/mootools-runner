@@ -15,11 +15,6 @@
 <script type="text/javascript" charset="utf-8" src="Helpers/Syn.js"></script>
 <script type="text/javascript" charset="utf-8" src="Helpers/simulateEvent.js"></script>
 <script type="text/javascript" charset="utf-8" src="Helpers/JSSpecToJasmine.js"></script>
-<script type="text/javascript" charset="utf-8" src="Helpers/Sinon.JS/lib/sinon.js"></script>
-<script type="text/javascript" charset="utf-8" src="Helpers/Sinon.JS/lib/sinon/util/fake_xml_http_request.js"></script>
-<script type="text/javascript" charset="utf-8" src="Helpers/Sinon.JS/lib/sinon/util/xhr_ie.js"></script>
-<script type="text/javascript" charset="utf-8" src="Helpers/Sinon.JS/lib/sinon/util/fake_timers.js"></script>
-<script type="text/javascript" charset="utf-8" src="Helpers/Sinon.JS/lib/sinon/util/timers_ie.js"></script>
 <script type="text/javascript" charset="utf-8" src="Helpers/Loader.js"></script>
 <script type="text/javascript" charset="utf-8" src="../Configuration.js"></script>
 
@@ -38,7 +33,12 @@ var load = function(object, base){
 };
 
 loader.setSourceLoader(load).setSpecLoader(load);
-loader.run();
+loader.loadSources();
+
+load(['sinon'], 'Runner/Helpers/Sinon.JS/lib/');
+load(['event', 'fake_timers', 'timers_ie', 'fake_xml_http_request', 'xhr_ie'], 'Runner/Helpers/Sinon.JS/lib/sinon/util/');
+
+loader.loadSets();
 
 SetNames = loader.getSetNames();
 SourceNames = loader.getSourceNames();
