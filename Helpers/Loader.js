@@ -91,18 +91,21 @@ context.SpecLoader = function(config, options){
 			envName = name;
 			return this;
 		},
+		
+		loadSources: function(){
+			sourceNames = getSource();
+			loadSource();
+			return this;
+		},
+		
+		loadSets: function(){
+			setNames = getSets();
+			loadSets();
+			return this;
+		},
 
 		run: function(){
-
-			// Get the sets and source
-			setNames = getSets();
-			sourceNames = getSource();
-
-			// Load the sets and source
-			loadSource();
-			loadSets();
-
-			return this;
+			return this.loadSources().loadSets();
 		},
 
 		getSetNames: function(){

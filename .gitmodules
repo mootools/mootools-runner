@@ -9,4 +9,4 @@
 	url = git://github.com/cpojer/jstestdriver-build.git
 [submodule "Helpers/Sinon.JS"]
 	path = Helpers/Sinon.JS
-	url = https://github.com/cjohansen/Sinon.JS.git
+	url = git://github.com/ibolmo/Sinon.JS.git
