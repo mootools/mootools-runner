@@ -17,6 +17,7 @@
 <script type="text/javascript" charset="utf-8" src="Helpers/JSSpecToJasmine.js"></script>
 <script type="text/javascript" charset="utf-8" src="Helpers/Loader.js"></script>
 <script type="text/javascript" charset="utf-8" src="../Configuration.js"></script>
+<script type="text/javascript" charset="utf-8" src="Helpers/ES5Harness.Adapter.js"></script>
 
 <script type="text/javascript" charset="utf-8">
 
@@ -44,6 +45,9 @@ SetNames = loader.getSetNames();
 SourceNames = loader.getSourceNames();
 
 window.onload = function(){
+	
+	ES5Harness.run();
+	
 	// Run the specs
 	jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
 	jasmine.getEnv().execute();
