@@ -13,7 +13,6 @@
 <!-- Specs -->
 <script type="text/javascript" src="Helpers/jasmine-html.js"></script>
 <script type="text/javascript" charset="utf-8" src="Helpers/Syn.js"></script>
-<script type="text/javascript" charset="utf-8" src="Helpers/simulateEvent.js"></script>
 <script type="text/javascript" charset="utf-8" src="Helpers/JSSpecToJasmine.js"></script>
 <script type="text/javascript" charset="utf-8" src="Helpers/Loader.js"></script>
 <script type="text/javascript" charset="utf-8" src="../Configuration.js"></script>
@@ -47,7 +46,7 @@ window.onload = function(){
 	// Run the specs
 	jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
 	jasmine.getEnv().execute();
-	
+
 	// Change title
 	document.title = 'Specs for ' + Configuration.name;
 };
