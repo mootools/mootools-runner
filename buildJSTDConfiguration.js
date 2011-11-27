@@ -25,7 +25,6 @@ loadSource([
 	'Runner/Jasmine/jasmine',
 	'Runner/JSTD-Adapter/src/JasmineAdapter',
 	'Runner/Helpers/Syn',
-	'Runner/Helpers/simulateEvent',
 	'Runner/Helpers/JSSpecToJasmine',
 	'Runner/Helpers/Sinon.JS/lib/sinon',
 	'Runner/Helpers/Sinon.JS/lib/sinon/util/fake_xml_http_request',
