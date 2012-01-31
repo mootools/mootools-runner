@@ -3,7 +3,6 @@
 
 var puts = require('sys').puts;
 
-
 var options = require('./Helpers/RunnerOptions').parseOptions(process.argv[2]);
 if (!options) return;
 
@@ -35,7 +34,6 @@ SpecLoader.setSourceLoader(function(object, base){
 	}
 });
 
-
 // Set method to get all the spec files
 var specs = [];
 SpecLoader.setSpecLoader(function(object, base){
@@ -47,11 +45,9 @@ SpecLoader.setSpecLoader(function(object, base){
 // Run loader
 SpecLoader.run();
 
-
 // Fire jasmine
-require.paths.push('./Jasmine-Node/lib');
 
-var jasmine = require('jasmine'),
+var jasmine = require('./Jasmine-Node/lib/jasmine'),
 	sys = require('sys');
 
 for(var key in jasmine)
@@ -59,7 +55,7 @@ for(var key in jasmine)
 
 require('./Helpers/JSSpecToJasmine');
 
-var reporter = require('reporters/' + (options.reporter || 'console')).Reporter;
+var reporter = require('./Jasmine-Node/lib/reporters/' + (options.reporter || 'console')).Reporter;
 reporter.done = function(runner, log){
   process.exit(runner.results().failedCount);
 };
