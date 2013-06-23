@@ -42,7 +42,7 @@ loader.loadSets();
 SetNames = loader.getSetNames();
 SourceNames = loader.getSourceNames();
 
-window.onload = function(){
+window.startSpecRunner = function(){
 	// Run the specs
 	jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
 	jasmine.getEnv().execute();
@@ -50,6 +50,8 @@ window.onload = function(){
 	// Change title
 	document.title = 'Specs for ' + Configuration.name;
 };
+
+if (!window.onload) window.onload = window.startSpecRunner;
 
 })();
 </script>
